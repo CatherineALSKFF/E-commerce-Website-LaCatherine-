@@ -9,8 +9,9 @@ function Card({item}) {
     <Link  className="link" to={`/product/${item.id}`}>
         <div className="card">
         <div className="image">
-       <img src="{item.img1}" className="mainImg"></img>
-       <img src="{item.img2}" className="secondImg"></img>
+        <span>New Season</span>
+       <img src={item.img1} className="mainImg"></img>
+       <img src={item.img2} className="secondImg"></img>
 
         </div>
         <h2>{item.title}</h2>
