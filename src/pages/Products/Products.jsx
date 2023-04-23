@@ -1,18 +1,29 @@
 import React, { useState } from "react";
 import './Products.scss';
 import List from '../../components/List/List'
-import { useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
+
 
 function Products() {
     const catId= parseInt(useParams().id)
 
 const [maxPrice, setMaxPrice]= useState(1000);
 const [sort, setSort]=useState(null);
+const [selectedSubCats, setSelectedSubCats]= useState([])
 
 
+const {data,loading, error}=useFetch( process.env.REACT_APP_API_URL +`/sub-categories?[filters][categories][id][$eq]=${catId}`)
 
-
-
+const handleChange= (e)=>{
+    const value= e.target.value;
+    const isChecked= e.target.checked;
+    setSelectedSubCats(
+        isChecked?
+        [... selectedSubCats, value]:
+        selectedSubCats.filter((item)=> item !== value)
+    )
+}
 
 
 
@@ -22,18 +33,22 @@ const [sort, setSort]=useState(null);
             <div className="left">
                 <div className="filterItem">
                     <h2>Categories</h2>
-                    <div className="inputItem">
-                    <input type="checkbox" id="1" value={1}/>
-                    <label htmlFor="1">Clothes</label>
-                    </div>
-                    <div className="inputItem">
+
+                    {data?.map((item) => (
+                        <div className="inputItem" key={item.id}>
+                            <input type="checkbox" id={item.id} value={item.id} onChange={handleChange} />
+                            <label htmlFor={item.id}>{item.attributes.title}</label>
+                        </div>
+                    ))}
+
+                    {/* <div className="inputItem">
                     <input type="checkbox" id="2" value={2}/>
                     <label htmlFor="2">Accessories</label>
                     </div>
                     <div className="inputItem">
                     <input type="checkbox" id="3" value={3}/>
                     <label htmlFor="3">Elegance</label>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="filterItem">
                     <h2>Filter by price</h2>
@@ -61,7 +76,7 @@ const [sort, setSort]=useState(null);
 
             <div className="right">
             <img className="catImg" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZYvGiut2W8PrP05Bj1tpJcKv5KxeidWPDGA&usqp=CAU"/>
-            <List catId={catId} maxPrice={maxPrice} sort={sort} />
+            <List catId={catId} maxPrice={maxPrice} sort={sort} subCats={selectedSubCats}/>
             </div>
         </div>
 

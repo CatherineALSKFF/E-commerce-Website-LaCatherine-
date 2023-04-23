@@ -11,7 +11,7 @@ function Home() {
     
         <div className="home">
         <Slider/>
-        <FeaturedProducts type='featured'/>
+        <FeaturedProducts type='featuring'/>
         <Categories/>
         <FeaturedProducts type='trending'/>
 

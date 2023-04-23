@@ -4,38 +4,48 @@ import { useState } from "react";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import BalanceIcon from '@mui/icons-material/Balance';
-
+import { useParams } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
 
 function Product() {
-    const [selectedImg, setSelectedImg] = useState(0)
+    const id= useParams().id
+    const [selectedImg, setSelectedImg] = useState('img')
     const [quantity, setQuantity] = useState(1);
 
-    const images = [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9I9lj1aVlHl7SSYzp3PH84qKwD5XPUiITD0gCGuqkFcoHYqpzEbx1CQKXLBzWkSVPD-w&usqp=CAU",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxs163ae-bi40h1FDdSIfsWMTlguSDNPbsS6gEmz2if2rLL1omFXvJkSBFREl3L6sbigw&usqp=CAU",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtFU5Y8EQ5aar9MJpWBIXSylTKKUjnzMCYQQFhEYy1S_wL6U8ikcXXPzwBLQJ5R2L13Tw&usqp=CAU"
-    ]
+
+
+    const {data,loading, error}= useFetch(process.env.REACT_APP_API_URL 
+        +`/products/${id}?populate=*`
+      
+            )
+    
+
+    // const images = [
+    //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9I9lj1aVlHl7SSYzp3PH84qKwD5XPUiITD0gCGuqkFcoHYqpzEbx1CQKXLBzWkSVPD-w&usqp=CAU",
+    //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxs163ae-bi40h1FDdSIfsWMTlguSDNPbsS6gEmz2if2rLL1omFXvJkSBFREl3L6sbigw&usqp=CAU",
+    //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtFU5Y8EQ5aar9MJpWBIXSylTKKUjnzMCYQQFhEYy1S_wL6U8ikcXXPzwBLQJ5R2L13Tw&usqp=CAU"
+    // ]
 
 
 
     return (
         <div className="product">
-            <div className="left">
+     {loading? ('loading'):   (  <>  <div className="left">
                 <div className="images">
 
-                    <img src={images[0]} onClick={e => setSelectedImg(0)} />
-                    <img src={images[1]} onClick={e => setSelectedImg(1)} />
-                    <img src={images[2]} onClick={e => setSelectedImg(2)} />
+                    <img src={process.env.REACT_APP_UPL_URL+ data?.attributes?.img?.data?.attributes?.url} onClick={e => setSelectedImg('img')} />
+                    <img src={process.env.REACT_APP_UPL_URL+ data?.attributes?.img2?.data?.attributes?.url} onClick={e => setSelectedImg('img2')} />
+                    {/* <img src={data?.attributes?.img3?.data?.attributes?.url} onClick={e => setSelectedImg(2)} /> */}
                 </div>
 
                 <div className="mainImg">
-                    <img src={images[selectedImg]} />
+                    <img src={process.env.REACT_APP_UPL_URL+ data?.attributes[selectedImg]?.data?.attributes?.url} />
                 </div>
             </div>
             <div className="right">
-                <h1>Title</h1>
-                <span className="price">$199</span>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sequi amet ab exercitationem dolores, praesentium cupiditate doloremque similique repellendus facere explicabo voluptate voluptatem? Porro provident ea molestiae temporibus beatae corrupti accusantium.</p>
+                <h1>{data?.attributes?.title}</h1>
+                <span className="price">{data?.attributes?.price}</span>
+                <p>{data?.attributes?.description}</p>
                 <div className="quantity">
                     <button onClick={() => setQuantity(prev => prev === 1 ? 1 : prev - 1)}>-</button>
                     <span>{quantity}</span>
@@ -69,6 +79,8 @@ function Product() {
 
 
             </div>
+            </>
+            )}
         </div>
 
     );
