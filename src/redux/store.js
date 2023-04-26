@@ -16,6 +16,7 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { PersistGate } from 'redux-persist/integration/react'
+const stripe = require('stripe')('sk_test_51N0P7SIskaHifZC8kBinMe9XvaGYpN2l2wLld1INeABRaKnO0NqIP71D3IPVU5AqGq51TyYjvZNA2FhwUwo3nOn900hx9nd7OG');
 
 
 
