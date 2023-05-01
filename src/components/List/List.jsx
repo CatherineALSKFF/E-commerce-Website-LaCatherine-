@@ -17,7 +17,6 @@ function List({type, subCats, maxPrice , sort, catId}) {
   
         )
 
-
    
     
     return (

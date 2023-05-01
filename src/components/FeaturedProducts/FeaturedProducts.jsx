@@ -14,7 +14,6 @@ const FeaturedProducts=({ type })=> {
   const{data, loading, error}= useFetch(
    process.env.REACT_APP_API_URL+ `/products?populate=*&[filters][type][$eq]=${type}`
     )
-console.log(data, loading, error)
   return (
 
     <div className="featuredProducts">

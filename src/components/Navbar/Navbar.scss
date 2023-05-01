@@ -1,5 +1,26 @@
+
+
+
+
+
+
 .navbar {
     height: 80px;
+
+        background: linear-gradient(to bottom, #000000, #ffffff);
+        background-color: #f2f2f2;
+        background-image: linear-gradient(to bottom, #f2f2f2, #d9e3f0);
+
+        font-family: 'Roboto Condensed', sans-serif;
+font-size: 25px;
+
+
+
+
+
+
+
+
 
     .wrapper {
         padding: 10px 30px;
@@ -11,12 +32,24 @@
             display: flex;
             align-items: center;
             font-size: 18px;
+
+            @media only screen and (max-width: 1000px) {
+                display: none;
+              }
         }
 
         .left {
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: 20px;
+
+            .toggleicon {
+                display: none;
+            
+                @media only screen and (max-width: 1000px) {
+                    display: block;
+                }
+            }
         }
 
         .center {

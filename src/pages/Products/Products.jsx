@@ -13,7 +13,7 @@ const [sort, setSort]=useState(null);
 const [selectedSubCats, setSelectedSubCats]= useState([])
 
 
-const {data,loading, error}=useFetch( process.env.REACT_APP_API_URL +`/sub-categories?[filters][categories][id][$eq]=${catId}`)
+const {data,loading, error}=useFetch( process.env.REACT_APP_API_URL +`/sub-categories?populate=*&[filters][categories][id][$eq]=${catId}`)
 
 const handleChange= (e)=>{
     const value= e.target.value;
@@ -24,7 +24,6 @@ const handleChange= (e)=>{
         selectedSubCats.filter((item)=> item !== value)
     )
 }
-
 
 
 
@@ -41,14 +40,6 @@ const handleChange= (e)=>{
                         </div>
                     ))}
 
-                    {/* <div className="inputItem">
-                    <input type="checkbox" id="2" value={2}/>
-                    <label htmlFor="2">Accessories</label>
-                    </div>
-                    <div className="inputItem">
-                    <input type="checkbox" id="3" value={3}/>
-                    <label htmlFor="3">Elegance</label>
-                    </div> */}
                 </div>
                 <div className="filterItem">
                     <h2>Filter by price</h2>
@@ -75,7 +66,7 @@ const handleChange= (e)=>{
 
 
             <div className="right">
-            <img className="catImg" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZYvGiut2W8PrP05Bj1tpJcKv5KxeidWPDGA&usqp=CAU"/>
+            <img className="catImg" src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fGZhc2hpb258ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60"/>
             <List catId={catId} maxPrice={maxPrice} sort={sort} subCats={selectedSubCats}/>
             </div>
         </div>
